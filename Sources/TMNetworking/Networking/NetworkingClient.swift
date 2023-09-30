@@ -13,19 +13,32 @@ public final class NetworkingClient: Networking {
     // MARK: - Properties
     
     private let baseURL = "https://crm.tba.one/"
+    private let authInterceptor: RequestInterceptor
+    
+    public var accessTokenStorage: TokenStorage
     
     // MARK: - Initializet
     
     public static let shared = NetworkingClient()
-    private init() { }
+    
+    private init() {
+        accessTokenStorage = KeychainTokenStorage()
+        authInterceptor = AuthInterceptor(tokenStorage: accessTokenStorage)
+    }
     
     // MARK: - Methods
     
-    public func request<Response: Decodable>(_ endpoint: Endpoint<Response>, _ parameters: Parameters?) async throws -> Response {
+    public func request<Response: Decodable>(
+        _ endpoint: Endpoint<Response>,
+        _ parameters: Parameters? = nil,
+        _ withRefreshingToken: Bool = true
+    ) async throws -> Response {
+        
         try await AF.request(
             "\(baseURL)\(endpoint.path)",
             method: endpoint.method,
-            parameters: parameters
+            parameters: parameters,
+            interceptor: withRefreshingToken ? authInterceptor : nil
         )
         .validate()
         .serializingDecodable(Response.self)
