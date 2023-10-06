@@ -16,7 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire", exact: "5.8.0"),
-        .package(url: "https://github.com/mrmda28/TMEndpoints", exact: "0.0.3")
+        .package(url: "https://github.com/mrmda28/TMEndpoints", exact: "0.0.4")
     ],
     targets: [
         .target(

@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mrmda28/TMEndpoints",
       "state" : {
-        "revision" : "94abd16e357e57fdaf046aefa2c94baac6d530d3",
-        "version" : "0.0.2"
+        "revision" : "53a1d5fed25c48e41e6d0d6956b84a1a9d866c7e",
+        "version" : "0.0.4"
       }
     }
   ],
