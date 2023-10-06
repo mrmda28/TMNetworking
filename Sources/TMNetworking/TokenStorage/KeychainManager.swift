@@ -8,7 +8,6 @@
 import Foundation
 
 enum KeychainError: Error {
-    case duplicateItem
     case unowned(status: OSStatus)
 }
 
@@ -21,9 +20,12 @@ final class KeychainManager {
             kSecValueData: accessToken
         ] as CFDictionary
         
-        let status = SecItemAdd(query, nil)
+        var status = SecItemAdd(query, nil)
         
-        guard status != errSecDuplicateItem else { throw KeychainError.duplicateItem }
+        if status == errSecDuplicateItem {
+            let attributesToUpdate = [kSecValueData: accessToken] as CFDictionary
+            status = SecItemUpdate(query, attributesToUpdate)
+        }
         
         guard status == errSecSuccess else { throw KeychainError.unowned(status: status) }
     }
