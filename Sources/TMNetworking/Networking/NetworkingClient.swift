@@ -12,7 +12,7 @@ public final class NetworkingClient: Networking {
     
     // MARK: - Properties
     
-    private let baseURL = "https://crm.tba.one/"
+    private let baseURL = "https://app.logwork.io/"
     private let authInterceptor: RequestInterceptor
     
     public var accessTokenStorage: TokenStorage
